@@ -22,3 +22,39 @@ function resetForm(){
     document.getElementById("age").value = "";
     document.getElementById("condition").value = "";
 }
+
+function generalReport() {
+    const numPatients = patients.length;
+    const conditionsCount = {
+        Diabetes: 0,
+        Thyroid: 0,
+        "High Blood Pressure": 0,
+    };
+    const genderConditionsCount = {
+        Male: {
+            Diabetes: 0,
+            Thyroid: 0,
+            "High Blood Pressure": 0,
+        },
+        Female: {
+            Diabetes: 0,
+            Thyroid: 0,
+            "High Blood Pressure": 0,
+        },
+    };
+
+    for (const patient of patients){
+        conditionsCount[patient.condition]++;
+        genderConditionsCount[patient.gender][patient.condition]++;
+    }
+
+    report.innerHTML += `<br>Gender-Based Conditions:<br>`;
+    for (const gender in genderConditionsCount){
+        report.innerHTML += `${gender}: <br>`;
+        for (const condition in genderConditionsCount[gender]){
+            report.innerHTML += `&nbsp;&nbsp;${condition}: ${genderConditionsCount[gender][condition]}<br>`
+        }
+    }
+}
+
+addPatientButton.addEventListener("click", addPatient);
